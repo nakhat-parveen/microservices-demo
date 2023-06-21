@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: GATEWAY-SERVICE
+  cloud:
+    gateway:
+      routes:
+        - id: citizen-service
+          uri: lb://CITIZEN-SERVICE
+          predicates:
+            - Path=/citizen/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: citizen-service
+                fallbackuri: forward:/citizenfallback
+        - id: vaccination-service
+          uri: lb://VACCINATION-SERVICE
+          predicates:
+            - Path=/vaccination/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: vaccination-service
+                fallbackuri: forward:/vaccinationfallback
+        - id: citizen-microservice
+          uri: lb://CITIZEN-MICROSERVICE
+          predicates:
+            - Path=/citizens/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: citizen-microservice
+                fallbackuri: forward:/citizenfallback
+server:
+  port: 8989
+
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 5000
+
