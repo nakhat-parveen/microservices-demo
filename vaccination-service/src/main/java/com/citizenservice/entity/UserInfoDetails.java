@@ -2,46 +2,53 @@ package com.citizenservice.entity;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class MyUserDetails implements UserDetails {
+public class UserInfoDetails implements UserDetails {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String username;
+	
+	private String name;
+	private String password;
+	private List<GrantedAuthority> authorities;
 	
 
-	public MyUserDetails() {
+	public UserInfoDetails() {
 		
 		// TODO Auto-generated constructor stub
 	}
 
-	public MyUserDetails(String username) {
+	public UserInfoDetails(UserInfo userinfo) {
 		
-		this.username = username;
+		this.name = userinfo.getName();
+		this.password= userinfo.getPassword();
+		this.authorities= Arrays.stream(userinfo.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 	
-		return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+		return authorities;
 	}
 
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return "pass";
+		return password;
 	}
 
 	@Override
 	public String getUsername() {
 		
-		return username;
+		return name;
 	}
 
 	@Override
