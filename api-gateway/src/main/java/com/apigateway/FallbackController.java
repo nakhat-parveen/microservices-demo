@@ -16,5 +16,10 @@ public class FallbackController {
 	public String vaccinationServiceFallback() {
 		return "vaccination service is down. Please try again later";
 	}
+	
+	@RequestMapping("/securityfallback")
+	public String securityServiceFallback() {
+		return "security service is down. Please try again later";
+	}
 
 }

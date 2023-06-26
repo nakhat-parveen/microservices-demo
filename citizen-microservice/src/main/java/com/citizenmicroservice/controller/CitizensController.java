@@ -32,6 +32,8 @@ public class CitizensController {
 	
 	@GetMapping("/vaccinationsCenters")
 	public List<Vaccination> getAvailableVaccinationCenters(){
+		System.out.println();
+		
 		return citizensService.getVaccinationCenters();
 	}
 

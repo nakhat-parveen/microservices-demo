@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.citizenservice.entity.Citizen;
 import com.citizenservice.entity.CitizenFeign;
 import com.citizenservice.entity.RequiredResponse;
-import com.citizenservice.entity.UserInfo;
+
 import com.citizenservice.entity.Vaccination;
-import com.citizenservice.repo.UserInfoDao;
+
 import com.citizenservice.repo.VaccinationRepo;
 
 @Service
@@ -21,11 +21,11 @@ public class VaccinationService {
 	@Autowired
 	private VaccinationRepo vaccinationrepo;
 	
-	@Autowired
-	private UserInfoDao userdao;
-	
-	@Autowired
-	PasswordEncoder passwordEncoder;
+//	@Autowired
+//	private UserInfoDao userdao;
+//	
+//	@Autowired
+//	PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private CitizenFeign feign;
@@ -55,9 +55,9 @@ public class VaccinationService {
 		return vaccinationrepo.findAll();
 	}
 	
-	public UserInfo addUsers(UserInfo user) {
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		return userdao.save(user);
-	}
+//	public UserInfo addUsers(UserInfo user) {
+//		user.setPassword(passwordEncoder.encode(user.getPassword()));
+//		return userdao.save(user);
+//	}
 
 }

@@ -1,4 +1,4 @@
-package com.citizenservice.entity;
+package com.securitydemo.securityconfig;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -9,33 +9,29 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.securitydemo.securityentities.UserInfo;
+
 public class UserInfoDetails implements UserDetails {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private String name;
+	private String username;
 	private String password;
 	private List<GrantedAuthority> authorities;
 	
-
-	public UserInfoDetails() {
+	public UserInfoDetails(UserInfo user) {
+		this.username= user.getUsername();
+		this.password=user.getPassword();
+		this.authorities= Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+	
 		
-		// TODO Auto-generated constructor stub
-	}
-
-	public UserInfoDetails(UserInfo userinfo) {
-		
-		this.name = userinfo.getName();
-		this.password= userinfo.getPassword();
-		this.authorities= Arrays.stream(userinfo.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-	
+		// TODO Auto-generated method stub
 		return authorities;
 	}
 
@@ -47,13 +43,13 @@ public class UserInfoDetails implements UserDetails {
 
 	@Override
 	public String getUsername() {
-		
-		return name;
+		// TODO Auto-generated method stub
+		return username;
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		
+		// TODO Auto-generated method stub
 		return true;
 	}
 

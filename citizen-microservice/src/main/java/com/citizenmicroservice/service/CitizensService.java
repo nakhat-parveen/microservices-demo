@@ -23,6 +23,7 @@ public class CitizensService {
 	}
 	
 	public List<Vaccination> getVaccinationCenters(){
+		System.out.println("calling vaccination service through citizen service layer");
 		return  provider.getAllVaccinationCenters().getBody();
 	}
 	

@@ -31,6 +31,15 @@ spring:
               args:
                 name: citizen-microservice
                 fallbackuri: forward:/citizenfallback
+        - id: security-service
+          uri: lb://SECURITY-SERVICE
+          predicates:
+            - Path=/secure/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: security-service
+                fallbackuri: forward:/securityfallback
 server:
   port: 8989
 
