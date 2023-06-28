@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class RequiredResponse {
 	
 	private Vaccination vaccinationcenter;
-	private List<Citizen> citizens;
+	private List<Citizens> citizens;
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.citizenservice.entity.Citizens;
 import com.citizenservice.entity.RequiredResponse;
 
 import com.citizenservice.entity.Vaccination;
@@ -47,6 +48,11 @@ public class VaccinationController {
 	
 	public ResponseEntity<List<Vaccination>> getAllVaccinationCenters(){
 		return new ResponseEntity<List<Vaccination>>(vaccinationService.getAllVaccinationCenters(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/getCitizen/{id}")
+	public Citizens getCitizen(@PathVariable Integer id) {
+		return vaccinationService.getCitizen(id);
 	}
 	
 //	@PostMapping("/addUsers")

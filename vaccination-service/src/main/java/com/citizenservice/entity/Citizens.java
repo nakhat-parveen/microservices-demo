@@ -7,10 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Citizen {
-	
+public class Citizens {
 	private Integer id;
 	private String name;
 	private int vaccinationcenterid;
+
 
 }

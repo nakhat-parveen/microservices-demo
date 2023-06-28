@@ -26,6 +26,18 @@ public class CitizensService {
 		System.out.println("calling vaccination service through citizen service layer");
 		return  provider.getAllVaccinationCenters().getBody();
 	}
+
+	public Citizens getCitizenById(Integer id) throws Exception {
+		
+		return dao.findById(id).orElseThrow(()-> new Exception("citizen not found"));
+	}
+
+	public List<Citizens> getAllCitizens(Integer id) {
+		// TODO Auto-generated method stub
+		return dao.findByVaccinationcenterid(id);
+	}
+
+	
 	
 	
 //	public List<Citizens> getAllCitizens(Integer id){
