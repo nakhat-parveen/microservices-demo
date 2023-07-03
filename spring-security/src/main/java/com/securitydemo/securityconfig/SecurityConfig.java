@@ -19,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
+//@EnableMethodSecurity
 public class SecurityConfig {
 	
 	@Bean
@@ -33,8 +33,8 @@ public class SecurityConfig {
 				.authorizeHttpRequests()
 				//.requestMatchers("/secure/api", "/secure/registerUsers").permitAll()
 				//.requestMatchers("/secure/admin", "/secure/getCenter/**")
-				.requestMatchers("/secure/api", "/secure/registerUsers", "/secure/addCitizens", "/secure/getCenter/**").permitAll()
-				.anyRequest().authenticated()
+				.requestMatchers("/auth/api", "/auth/registerUsers", "/auth/token", "/auth/validate").permitAll()
+				
 				.and().build();
 				
 				//.and().authorizeHttpRequests().antMatchers("/vaccination/**").authenticated()

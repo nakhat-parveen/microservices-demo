@@ -4,33 +4,39 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.securitydemo.dao.UserDao;
+import com.securitydemo.dto.AuthRequest;
 import com.securitydemo.securityentities.Citizens;
 import com.securitydemo.securityentities.UserInfo;
 import com.securitydemo.securityentities.Vaccination;
+import com.securitydemo.service.AuthService;
 import com.securitydemo.webclientconfigs.CitizenServiceProvider;
 import com.securitydemo.webclientconfigs.VaccinationServiceProvider;
 
 @RestController
-@RequestMapping("/secure")
+@RequestMapping("/auth")
 public class SecurityController {
 	
 	@Autowired
 	UserDao userdao;
 	
-	@Autowired
-	CitizenServiceProvider citizenServiceProvider;
-	
-	@Autowired
-	VaccinationServiceProvider vaccinationServiceProvider;
+	 @Autowired
+	 private AuthService service;
+
+	 @Autowired
+	 private AuthenticationManager authenticationManager;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -62,21 +68,37 @@ public class SecurityController {
 		return userdao.save(user);
 	}
 	
-	@PostMapping("/addCitizens")
-	Citizens addCitizens(@RequestBody Citizens citizen) {
-		return citizenServiceProvider.addcitizen(citizen).getBody();
-	}
+	 @PostMapping("/token")
+	    public String getToken(@RequestBody AuthRequest authRequest) {
+	        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+	        if (authenticate.isAuthenticated()) {
+	            return service.generateToken(authRequest.getUsername());
+	        } else {
+	            throw new RuntimeException("invalid access");
+	        }
+	    }
+	 
+	 @GetMapping("/validate")
+	    public String validateToken(@RequestParam("token") String token) {
+	        service.validateToken(token);
+	        return "Token is valid";
+	    }
 	
-	@GetMapping("/getCenters")
-	List<Vaccination> getCentersFromCitizenService(){
-		return citizenServiceProvider.getAvailableVaccinationCenters();
-	}
+//	@PostMapping("/addCitizens")
+//	Citizens addCitizens(@RequestBody Citizens citizen) {
+//		return citizenServiceProvider.addcitizen(citizen).getBody();
+//	}
+//	
+//	@GetMapping("/getCenters")
+//	List<Vaccination> getCentersFromCitizenService(){
+//		return citizenServiceProvider.getAvailableVaccinationCenters();
+//	}
 	
-	@GetMapping("/getCenter/{id}")
-	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
-	public Vaccination getCenterById(@PathVariable Integer id) {
-		return vaccinationServiceProvider.getVaccinationCenterDetails(id).getBody();
-	}
+//	@GetMapping("/getCenter/{id}")
+//	@PreAuthorize("hasAuthority('ROLE_ADMIN')")
+//	public Vaccination getCenterById(@PathVariable Integer id) {
+//		return vaccinationServiceProvider.getVaccinationCenterDetails(id).getBody();
+//	}
 	
 
 }

@@ -18,6 +18,7 @@ spring:
           predicates:
             - Path=/vaccination/**
           filters:
+            - AuthenticationFilter
             - name: CircuitBreaker
               args:
                 name: vaccination-service
@@ -27,6 +28,7 @@ spring:
           predicates:
             - Path=/citizens/**
           filters:
+            - AuthenticationFilter
             - name: CircuitBreaker
               args:
                 name: citizen-microservice
@@ -34,7 +36,7 @@ spring:
         - id: security-service
           uri: lb://SECURITY-SERVICE
           predicates:
-            - Path=/secure/**
+            - Path=/auth/**
           filters:
             - name: CircuitBreaker
               args:

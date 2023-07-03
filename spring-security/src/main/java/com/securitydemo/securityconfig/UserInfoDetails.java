@@ -19,12 +19,12 @@ public class UserInfoDetails implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
-	private List<GrantedAuthority> authorities;
+	//private List<GrantedAuthority> authorities;
 	
 	public UserInfoDetails(UserInfo user) {
 		this.username= user.getUsername();
 		this.password=user.getPassword();
-		this.authorities= Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+		//this.authorities= Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 	
 		
 	}
@@ -32,7 +32,8 @@ public class UserInfoDetails implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return authorities;
+		return null;
+		//return authorities;
 	}
 
 	@Override
