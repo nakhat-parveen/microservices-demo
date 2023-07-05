@@ -7,6 +7,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.securitydemo.dao.UserDao;
 import com.securitydemo.dto.AuthRequest;
+import com.securitydemo.securityconfig.UserInfoDetails;
 import com.securitydemo.securityentities.Citizens;
 import com.securitydemo.securityentities.UserInfo;
 import com.securitydemo.securityentities.Vaccination;
@@ -37,6 +40,9 @@ public class SecurityController {
 
 	 @Autowired
 	 private AuthenticationManager authenticationManager;
+	 
+	 @Autowired
+	 UserDetailsService userDetailsService;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
@@ -78,9 +84,11 @@ public class SecurityController {
 	        }
 	    }
 	 
-	 @GetMapping("/validate")
-	    public String validateToken(@RequestParam("token") String token) {
-	        service.validateToken(token);
+	 @PostMapping("/validate/{token}")
+	    public String validateToken(@PathVariable String token, @RequestBody UserInfo user) {
+		 String username= user.getUsername();
+		 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+	        service.validateToken(token, userDetails);
 	        return "Token is valid";
 	    }
 	

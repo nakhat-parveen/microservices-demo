@@ -8,9 +8,11 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import com.securitydemo.securityentities.UserInfo;
 
+@Component
 public class UserInfoDetails implements UserDetails {
 	
 	/**
