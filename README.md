@@ -56,7 +56,7 @@ Implements fault tolerance using the circuit breaker pattern. If a downstream se
 
 | Component | Technology |
 |---|---|
-| Language | Java 17 |
+| Language | Java 11+ |
 | Framework | Spring Boot |
 | Service Discovery | Spring Cloud Netflix Eureka |
 | API Gateway | Spring Cloud Gateway |
@@ -71,7 +71,7 @@ Implements fault tolerance using the circuit breaker pattern. If a downstream se
 
 ### Prerequisites
 
-- Java 17+
+- Java 11+
 - Maven 3.8+
 
 ### 1. Clone the repository
