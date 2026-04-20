@@ -17,7 +17,7 @@ A multi service Spring Boot application demonstrating a microservices architectu
    ┌──────────▼────────┐ ┌───────▼────────┐ ┌──────▼──────────────┐
    │ Citizen Service   │ │ Vaccination    │ │  Spring Security    │
    │ (Port 8069)       │ │ Service        │ │  (Auth Service)     │
-   │                   │ │ (Port 8065)    │ │  (Port 8083)        │
+   │                   │ │ (Port 8065)    │ │  (Port 8001)        │
    └───────────────────┘ └────────────────┘ └─────────────────────┘
               │                  │
               └──────────────────┘
